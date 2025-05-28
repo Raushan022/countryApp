@@ -21,6 +21,20 @@ const Country = () => {
 
   if (isPending) return <Loader />;
 
+  const searchCountry = (countryName) => {
+    if (search) {
+      return countryName.name.common
+        .toLowerCase()
+        .includes(search.toLowerCase());
+    }
+    return countryName;
+  };
+
+  // main logic to search and filter
+  const filteredCountries = countries.filter((country) =>
+    searchCountry(country)
+  );
+
   return (
     <section className="country-section">
       <SearchFilter
@@ -30,7 +44,7 @@ const Country = () => {
         setFilter={setFilter}
       />
       <ul className="grid grid-four-cols">
-        {countries.map((country, index) => (
+        {filteredCountries.map((country, index) => (
           <CountryCard key={index} country={country} />
         ))}
       </ul>
