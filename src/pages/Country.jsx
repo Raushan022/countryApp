@@ -21,6 +21,12 @@ const Country = () => {
 
   if (isPending) return <Loader />;
 
+  const filterByRegion = (countryName) => {
+    if (filter === "all") return countryName;
+
+    return countryName.region === filter;
+  };
+
   const searchCountry = (countryName) => {
     if (search) {
       return countryName.name.common
@@ -31,8 +37,8 @@ const Country = () => {
   };
 
   // main logic to search and filter
-  const filteredCountries = countries.filter((country) =>
-    searchCountry(country)
+  const filteredCountries = countries.filter(
+    (country) => searchCountry(country) && filterByRegion(country)
   );
 
   return (
